@@ -28,6 +28,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import udec.edu.co.Service.IProfesorService;
 
 /**
  *
@@ -38,14 +39,14 @@ import javax.ws.rs.core.Response;
 public class ProfesorController {
 
     @EJB
-    //private IProfesorService service;
+    private IProfesorService service;
 
     @Path("/insertar")
     @POST
     @Produces(MediaType.APPLICATION_JSON) //Trae Respuesta
     @Consumes(MediaType.APPLICATION_JSON) //Consume algo
-    public Response insertarProfesor(@Valid Profesor profesor) {
-        Mensaje mensaje;
+    public Response insertar(@Valid Profesor profesor) {
+        Mensaje mensaje = service.insertar(profesor);
         return null;
     }
 
@@ -53,7 +54,7 @@ public class ProfesorController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editarProfesor(@Valid Profesor profesor) {
+    public Response editar(@Valid Profesor profesor) {
         Mensaje mensaje;
         return null;
     }
@@ -70,7 +71,7 @@ public class ProfesorController {
     @Path("/retornarPorCedulaN/{cedula}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response traerProfesorCedula(@PathParam("cedula") Integer cedula) {
+    public Response traerPorCedula(@PathParam("cedula") Integer cedula) {
         Mensaje mensaje;
         return null;
     }
@@ -87,7 +88,7 @@ public class ProfesorController {
     @Path("/retornarPorCedulaV/{cedula}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response retornarProfesorCedula(@PathParam("cedula")
+    public Response retornarPorCedula(@PathParam("cedula")
             @Min(value = 9, message = "Minimo 9 Caracteres")
             @Max(value = 11, message = "Maximo 11 Caracteres")
             @NotNull(message = "Cedula Requerida") Integer cedula) {
@@ -98,7 +99,7 @@ public class ProfesorController {
     @Path("/retornarMateria/{materia}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response traerProfesorMateria(@PathParam("materia")
+    public Response traerPorMateria(@PathParam("materia")
             @NotNull(message = "Campo materia Requerido")
             @Size(min = 3, max = 100, message = "Tamaño Incorrecto") String materia
     ) {
@@ -109,14 +110,14 @@ public class ProfesorController {
     @Path("/retornarTodos")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response traerTodosProfesores() {
+    public Response traerTodos() {
         return null;
     }
 
     @Path("eliminar/{cedula}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarProfesor(@PathParam("cedula")
+    public Response eliminar(@PathParam("cedula")
             @Min(value = 9, message = "Minimo 9 Caracteres")
             @Max(value = 11, message = "Maximo 11 Caracteres")
             @NotNull(message = "Cedula Requerida") Integer cedula) {

@@ -16,9 +16,9 @@ import udec.edu.co.Entity.Profesor;
 @Local
 public interface IProfesorRepo {
     
-    public List<Profesor> listarProfesor();
-    public Profesor listarId(Integer id);
-    public void guardar(Profesor profesor);
+    public List<Profesor> listarTodos();
+    public Profesor listarPorId(Integer id);
+    public void insertar(Profesor profesor);
     public void eliminar(Integer id);
     public void editar(Profesor profesor);
     

@@ -16,9 +16,9 @@ import udec.edu.co.Pojo.Mensaje;
 @Local
 public interface IProfesorService {
     
-    public Mensaje insertarProfesor(Profesor profesor);
-    public Mensaje editarProfesor(Profesor profesor);
-    public Mensaje eliminarProfesor(Integer cedula);
-    public Mensaje traerUsuario(Integer cedula);
-    public Mensaje traerUsuarios();
+    public Mensaje insertar(Profesor profesor);
+    public Mensaje editar(Profesor profesor);
+    public Mensaje eliminar(Integer cedula);
+    public Mensaje traerPorCedula(Integer cedula);
+    public Mensaje traerTodos();
 }
