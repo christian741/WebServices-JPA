@@ -5,11 +5,15 @@
  */
 package udec.edu.co.Entity;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -18,17 +22,30 @@ import javax.persistence.Id;
  */
 @Entity
 @Table(name = "profesor")
-public class Profesor {
-    
+
+public class Profesor implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "nombre")
+
+    @NotNull(message = "Nombre requerido")
+    @Size(min = 3, max = 20, message = "Nombre Tamaño Equivocado")
+    @Column(name = "nombre", length = 20, nullable = false)
     private String nombre;
-    @Column(name = "apellido")
+
+    @NotNull(message = "Apellido requerido")
+    @Size(min = 3, max = 20, message = "Apellido Tamaño Equivocado")
+    @Column(name = "apellido", length = 20, nullable = false)
     private String apellido;
-    @Column(name = "cedula")
+
+    @NotNull(message = "Cedula requerida")
+    @Size(min = 9, max = 11, message = "Cedula Tamaño Equivocado")
+    @Column(name = "cedula", length = 11, nullable = false)
     private String cedula;
-    @Column(name = "edad")
+
+    @NotNull(message = "Edad requerida")
+    @Column(name = "edad", nullable = false)
     private short edad;
 
     public Profesor() {
@@ -81,11 +98,5 @@ public class Profesor {
     public void setEdad(short edad) {
         this.edad = edad;
     }
-    
-    
-    
-    
-    
-    
-    
+
 }
