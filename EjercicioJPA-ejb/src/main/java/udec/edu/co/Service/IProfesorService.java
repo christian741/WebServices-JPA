@@ -18,7 +18,7 @@ public interface IProfesorService {
     
     public Mensaje insertarProfesor(Profesor profesor);
     public Mensaje editarProfesor(Profesor profesor);
-    public Mensaje eliminarProfesor(long id);
-    public Mensaje traerUsuario(long id);
+    public Mensaje eliminarProfesor(Integer cedula);
+    public Mensaje traerUsuario(Integer cedula);
     public Mensaje traerUsuarios();
 }
