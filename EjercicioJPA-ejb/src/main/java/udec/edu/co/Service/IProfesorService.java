@@ -6,7 +6,10 @@
 package udec.edu.co.Service;
 
 import javax.ejb.Local;
+import javax.ejb.ObjectNotFoundException;
 import udec.edu.co.Entity.Profesor;
+import udec.edu.co.Excepcion.ParamRequiredException;
+import udec.edu.co.Excepcion.ParamUsedException;
 import udec.edu.co.Pojo.Mensaje;
 
 /**
@@ -17,9 +20,9 @@ import udec.edu.co.Pojo.Mensaje;
 public interface IProfesorService {
     
     public Mensaje insertar(Profesor profesor);
-    public Mensaje editar(Profesor profesor);
-    public Mensaje eliminar(Integer cedula);
+    public Mensaje editar(Profesor profesor)throws ParamRequiredException,ParamUsedException,ObjectNotFoundException;
+    public Mensaje eliminar(Integer cedula)throws ObjectNotFoundException;
     public Mensaje traerPorCedula(Integer cedula);
     public Mensaje traerTodos();
-    public Mensaje traerId(Integer id);
+    public Mensaje traerId(Integer id) throws ObjectNotFoundException;
 }
