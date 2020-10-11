@@ -6,6 +6,7 @@
 package udec.edu.co.RepoImplementaciones;
 
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,6 +18,7 @@ import udec.edu.co.Repo.IProfesorRepo;
  *
  * @author Christian
  */
+@Stateless
 public class ProfesorRepoImplementacion implements IProfesorRepo {
 
     //Llamar a persistencia que se conecta con el pool de glashfish
@@ -26,13 +28,13 @@ public class ProfesorRepoImplementacion implements IProfesorRepo {
 
     @Override
     public List<Profesor> listarTodos() {
-        TypedQuery<Profesor> listaProfesor = this.entity.createNamedQuery("profesor.listarTodo", Profesor.class);                
+        TypedQuery<Profesor> listaProfesor = this.entity.createNamedQuery("Profesor.listarTodo", Profesor.class);                
         return listaProfesor.getResultList();
     }
 
     @Override
     public Profesor listarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return this.entity.find(Profesor.class, id);
     }
 
     @Override
@@ -41,13 +43,13 @@ public class ProfesorRepoImplementacion implements IProfesorRepo {
     }
 
     @Override
-    public void eliminar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void eliminar(Profesor profesor) {
+         this.entity.remove(profesor);
     }
 
     @Override
     public void editar(Profesor profesor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.entity.merge(profesor);
     }
 
     @Override

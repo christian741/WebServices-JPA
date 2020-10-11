@@ -24,15 +24,17 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "profesor")
 @NamedQueries({
-    @NamedQuery(name = "profesor.listarTodo", query = "SELECT p FROM profesor p"),
-    @NamedQuery(name = "profesor.validarCedula", query = "SELECT COUNT(p.cedula)  FROM profesor p WHERE p.cedula = :cedula AND p.id_profesor <> :id"),
-    @NamedQuery(name = "profesor.validarCorreo", query = "SELECT COUNT(p.correo)  FROM profesor p WHERE p.correo = :correo AND p.id_profesor <> :id")
+    // Name por buena practica colocar la clase entity despues.
+    // FROM escoger La entity Profesor no la de base de datos
+    @NamedQuery(name = "Profesor.listarTodo", query = "SELECT p FROM Profesor p"),
+    @NamedQuery(name = "Profesor.validarCedula", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula AND p.id_profesor <> :id"),
+    @NamedQuery(name = "Profesor.validarCorreo", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo AND p.id_profesor <> :id")
 })
 public class Profesor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     @NotNull(message = "Nombre requerido")
     @Size(min = 3, max = 20, message = "Nombre Tamaño Equivocado")
@@ -55,13 +57,13 @@ public class Profesor implements Serializable {
 
     @NotNull(message = "Correo requerida")
     @Size(min = 5, max = 40, message = "Correo Tamaño Equivocado")
-    @Column(name = "cedula", length = 40, nullable = false)
+    @Column(name = "correo", length = 40, nullable = false)
     private String correo;
 
     public Profesor() {
     }
 
-    public Profesor(long id, String nombre, String apellido, String cedula, short edad, String correo) {
+    public Profesor(Integer id, String nombre, String apellido, String cedula, short edad, String correo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -72,11 +74,11 @@ public class Profesor implements Serializable {
     
     
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
