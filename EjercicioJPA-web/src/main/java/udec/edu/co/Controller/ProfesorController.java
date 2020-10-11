@@ -7,6 +7,7 @@ package udec.edu.co.Controller;
 
 //imports EJB
 import javax.ejb.EJB;
+import javax.ejb.ObjectNotFoundException;
 import javax.ejb.Stateless;
 import udec.edu.co.Entity.Profesor;
 import udec.edu.co.Pojo.Mensaje;
@@ -28,6 +29,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import udec.edu.co.Excepcion.ParamRequiredException;
+import udec.edu.co.Excepcion.ParamUsedException;
 import udec.edu.co.Service.IProfesorService;
 
 /**
@@ -54,7 +57,7 @@ public class ProfesorController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editar(@Valid Profesor profesor) {
+    public Response editar(@Valid Profesor profesor) throws ParamRequiredException, ParamUsedException, ObjectNotFoundException {
         Mensaje mensaje = service.editar(profesor);
         return Response.status(Response.Status.OK).entity(mensaje).build();
     }
@@ -72,7 +75,7 @@ public class ProfesorController {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Response traerPorCedula(@PathParam("cedula") Integer cedula) {
-        Mensaje mensaje;
+       Mensaje mensaje = service.traerPorCedula(cedula);
         return null;
     }
 
@@ -92,7 +95,7 @@ public class ProfesorController {
             @Min(value = 9, message = "Minimo 9 Caracteres")
             @Max(value = 11, message = "Maximo 11 Caracteres")
             @NotNull(message = "Cedula Requerida") Integer cedula) {
-        Mensaje mensaje;
+        Mensaje mensaje = service.traerPorCedula(cedula);
         return null;
     }
 
@@ -111,7 +114,8 @@ public class ProfesorController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response traerTodos() {
-        return null;
+         Mensaje mensaje = service.traerTodos();
+        return Response.status(Response.Status.OK).entity(mensaje).build();
     }
 
     @Path("eliminar/{cedula}")
@@ -120,8 +124,8 @@ public class ProfesorController {
     public Response eliminar(@PathParam("cedula")
             @Min(value = 9, message = "Minimo 9 Caracteres")
             @Max(value = 11, message = "Maximo 11 Caracteres")
-            @NotNull(message = "Cedula Requerida") Integer cedula) {
-        Mensaje mensaje;
+            @NotNull(message = "Cedula Requerida") Integer cedula) throws ObjectNotFoundException {
+        Mensaje mensaje = service.eliminar(cedula);
         return null;
     }
 }
