@@ -21,6 +21,8 @@ public interface IProfesorRepo {
     public void insertar(Profesor profesor);
     public void eliminar(Integer id);
     public void editar(Profesor profesor);
+    public Integer validarCedula(String cedula, Integer id);
+    public Integer validarCorreo(String correo, Integer id);
     
     
 }

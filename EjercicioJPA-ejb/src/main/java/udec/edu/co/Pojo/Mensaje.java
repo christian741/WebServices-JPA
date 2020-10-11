@@ -6,6 +6,7 @@
 package udec.edu.co.Pojo;
 
 import java.util.ArrayList;
+import udec.edu.co.Entity.Profesor;
 
 /**
  *
@@ -24,6 +25,8 @@ public class Mensaje {
         this.error = error;
         this.objeto = objeto;
     }
+
+  
 
     public ErrorWraper getError() {
         return error;

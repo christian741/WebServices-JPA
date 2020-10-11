@@ -12,9 +12,10 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 /**
  *
@@ -22,7 +23,11 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "profesor")
-
+@NamedQueries({
+    @NamedQuery(name = "profesor.listarTodo", query = "SELECT p FROM profesor p"),
+    @NamedQuery(name = "profesor.validarCedula", query = "SELECT COUNT(p.cedula)  FROM profesor p WHERE p.cedula = :cedula AND p.id_profesor <> :id"),
+    @NamedQuery(name = "profesor.validarCorreo", query = "SELECT COUNT(p.correo)  FROM profesor p WHERE p.correo = :correo AND p.id_profesor <> :id")
+})
 public class Profesor implements Serializable {
 
     @Id
@@ -48,16 +53,24 @@ public class Profesor implements Serializable {
     @Column(name = "edad", nullable = false)
     private short edad;
 
+    @NotNull(message = "Correo requerida")
+    @Size(min = 5, max = 40, message = "Correo Tamaño Equivocado")
+    @Column(name = "cedula", length = 40, nullable = false)
+    private String correo;
+
     public Profesor() {
     }
 
-    public Profesor(long id, String nombre, String apellido, String cedula, short edad) {
+    public Profesor(long id, String nombre, String apellido, String cedula, short edad, String correo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
         this.edad = edad;
+        this.correo = correo;
     }
+    
+    
 
     public long getId() {
         return id;
@@ -98,5 +111,14 @@ public class Profesor implements Serializable {
     public void setEdad(short edad) {
         this.edad = edad;
     }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+    
 
 }

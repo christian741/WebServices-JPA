@@ -21,4 +21,5 @@ public interface IProfesorService {
     public Mensaje eliminar(Integer cedula);
     public Mensaje traerPorCedula(Integer cedula);
     public Mensaje traerTodos();
+    public Mensaje traerId(Integer id);
 }

@@ -5,6 +5,7 @@
  */
 package udec.edu.co.ServiceImplementaciones;
 
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -16,10 +17,11 @@ import udec.edu.co.Service.IProfesorService;
 
 /**
  * Clase encargada de la logica pesada
+ *
  * @author Christian
  */
 @Stateless
-public class ProfesorServiceImplementaciones implements IProfesorService{
+public class ProfesorServiceImplementaciones implements IProfesorService {
 
     //Llama por inyeccion a la capa repo de la BD
     @EJB
@@ -28,7 +30,7 @@ public class ProfesorServiceImplementaciones implements IProfesorService{
     @Override
     public Mensaje insertar(Profesor profesor) {
         this.repo.insertar(profesor);
-        return new Mensaje(new ErrorWraper("Se ha creado Correctamente","200","Created"), null);
+        return new Mensaje(new ErrorWraper("Se ha creado Correctamente", "200", "Created"), null);
     }
 
     @Override
@@ -48,11 +50,28 @@ public class ProfesorServiceImplementaciones implements IProfesorService{
 
     @Override
     public Mensaje traerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Profesor> listaProfesor = (ArrayList<Profesor>) repo.listarTodos();
+        Mensaje mensaje = new Mensaje(new ErrorWraper("Se ha creado Correctamente", "200", "Created"), castLista(listaProfesor));
+        return mensaje;
     }
-   
+
+    public Mensaje traerId(Integer id) {
+        return null;
+
+    }
     
+    /**
+     * Castear Lista a Objetos A Profesores
+     * @param listaVieja
+     * @return 
+     */
+    private ArrayList<Object> castLista(ArrayList<Profesor> listaVieja) {
+        
+        ArrayList<Object> nuevaListaCasteada = new ArrayList<>();
+        for (Profesor listObject : listaVieja) {
+            nuevaListaCasteada.add((Object) listObject);
+        }
+        return nuevaListaCasteada;
+    }
 
-
-   
 }

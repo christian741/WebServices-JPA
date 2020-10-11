@@ -8,6 +8,8 @@ package udec.edu.co.RepoImplementaciones;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import udec.edu.co.Entity.Profesor;
 import udec.edu.co.Repo.IProfesorRepo;
 
@@ -24,7 +26,8 @@ public class ProfesorRepoImplementacion implements IProfesorRepo {
 
     @Override
     public List<Profesor> listarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Profesor> listaProfesor = this.entity.createNamedQuery("profesor.listarTodo", Profesor.class);                
+        return listaProfesor.getResultList();
     }
 
     @Override
@@ -47,5 +50,21 @@ public class ProfesorRepoImplementacion implements IProfesorRepo {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Integer validarCedula(String cedula, Integer id) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCedula");
+        query.setParameter("cedula", cedula);
+        query.setParameter("id", id);
+        return (Integer) query.getSingleResult();
+    }
+
+    @Override
+    public Integer validarCorreo(String correo, Integer id) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCorreo");
+        query.setParameter("correo", correo);
+        query.setParameter("id", id);
+        return (Integer) query.getSingleResult();
+    }
+    
 
 }

@@ -47,7 +47,7 @@ public class ProfesorController {
     @Consumes(MediaType.APPLICATION_JSON) //Consume algo
     public Response insertar(@Valid Profesor profesor) {
         Mensaje mensaje = service.insertar(profesor);
-        return null;
+        return Response.status(Response.Status.CREATED).entity(mensaje).build();
     }
 
     @Path("/editar")
@@ -55,8 +55,8 @@ public class ProfesorController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editar(@Valid Profesor profesor) {
-        Mensaje mensaje;
-        return null;
+        Mensaje mensaje = service.editar(profesor);
+        return Response.status(Response.Status.OK).entity(mensaje).build();
     }
 
     /**
