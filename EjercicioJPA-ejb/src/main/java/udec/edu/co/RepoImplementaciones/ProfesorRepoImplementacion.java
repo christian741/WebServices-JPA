@@ -28,23 +28,23 @@ public class ProfesorRepoImplementacion implements IProfesorRepo {
 
     @Override
     public List<Profesor> listarTodos() {
-        TypedQuery<Profesor> listaProfesor = this.entity.createNamedQuery("Profesor.listarTodo", Profesor.class);                
+        TypedQuery<Profesor> listaProfesor = this.entity.createNamedQuery("Profesor.listarTodo", Profesor.class);
         return listaProfesor.getResultList();
     }
 
     @Override
     public Profesor listarPorId(Integer id) {
-       return this.entity.find(Profesor.class, id);
+        return this.entity.find(Profesor.class, id);
     }
 
     @Override
     public void insertar(Profesor profesor) {
-       this.entity.persist(profesor);
+        this.entity.persist(profesor);
     }
 
     @Override
     public void eliminar(Profesor profesor) {
-         this.entity.remove(profesor);
+        this.entity.remove(profesor);
     }
 
     @Override
@@ -57,7 +57,8 @@ public class ProfesorRepoImplementacion implements IProfesorRepo {
         Query query = this.entity.createNamedQuery("Profesor.validarCedula");
         query.setParameter("cedula", cedula);
         query.setParameter("id", id);
-        return (Integer) query.getSingleResult();
+        Integer respuesta = Integer.parseInt(query.getSingleResult().toString());
+        return respuesta;
     }
 
     @Override
@@ -65,8 +66,31 @@ public class ProfesorRepoImplementacion implements IProfesorRepo {
         Query query = this.entity.createNamedQuery("Profesor.validarCorreo");
         query.setParameter("correo", correo);
         query.setParameter("id", id);
-        return (Integer) query.getSingleResult();
+        Integer respuesta = Integer.parseInt(query.getSingleResult().toString());
+        return respuesta;
     }
-    
+
+    @Override
+    public Integer validarCedulaRegistro(String cedula) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCedulaRegistro");
+        query.setParameter("cedula", cedula);
+        Integer respuesta = Integer.parseInt(query.getSingleResult().toString());
+        return respuesta;
+    }
+
+    @Override
+    public Integer validarCorreoRegistro(String correo) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCorreoRegistro");
+        query.setParameter("correo", correo);
+        Integer respuesta = Integer.parseInt(query.getSingleResult().toString());
+        return respuesta;
+    }
+
+    @Override
+    public Profesor listarPorCedula(String cedula) {
+        Query query = this.entity.createNamedQuery("Profesor.listarPorCedula");
+        query.setParameter("cedula", cedula);
+        return (Profesor) query.getSingleResult();
+    }
 
 }

@@ -18,11 +18,13 @@ public interface IProfesorRepo {
     
     public List<Profesor> listarTodos();
     public Profesor listarPorId(Integer id);
+    public Profesor listarPorCedula(String cedula);
     public void insertar(Profesor profesor);
     public void eliminar(Profesor profesor);
     public void editar(Profesor profesor);
     public Integer validarCedula(String cedula, Integer id);
     public Integer validarCorreo(String correo, Integer id);
-    
+    public Integer validarCedulaRegistro(String cedula);
+    public Integer validarCorreoRegistro(String correo);
     
 }
