@@ -5,8 +5,8 @@
  */
 package udec.edu.co.Pojo;
 
-import java.util.ArrayList;
-import udec.edu.co.Entity.Profesor;
+import java.util.List;
+
 
 /**
  *
@@ -14,36 +14,43 @@ import udec.edu.co.Entity.Profesor;
  */
 public class Mensaje {
     
-    private ErrorWraper error;
-    private ArrayList<Object> objeto;
+    private ErrorWraper mensaje;
+    private List<List<String>> lista;
 
-    public Mensaje(){
-        
+    public Mensaje() {
     }
-    
-    public Mensaje(ErrorWraper error, ArrayList<Object> objeto) {
-        this.error = error;
-        this.objeto = objeto;
+
+    public Mensaje(ErrorWraper mensaje, List<List<String>> lista) {
+        this.mensaje = mensaje;
+        this.lista = lista;
     }
+
+    public ErrorWraper getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(ErrorWraper mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public List<List<String>> getLista() {
+        return lista;
+    }
+
+    public void setLista(List<List<String>> lista) {
+        this.lista = lista;
+    }
+
+    @Override
+    public String toString() {
+        return "Mensaje{" + "mensaje=" + mensaje + ", lista=" + lista + '}';
+    }
+
 
   
 
-    public ErrorWraper getError() {
-        return error;
-    }
-
-    public void setError(ErrorWraper error) {
-        this.error = error;
-    }
-
-    public ArrayList<Object> getObjeto() {
-        return objeto;
-    }
-
-    public void setObjeto(ArrayList<Object> objeto) {
-        this.objeto = objeto;
-    }
     
     
+   
     
 }

@@ -15,7 +15,7 @@ import java.time.Instant;
  */
 public class ErrorWraper implements Serializable{
     
-    private String error;
+    private String mensaje;
     private String codigo;
     private String nombreCodigo;
     private Instant Timestamp;
@@ -24,8 +24,8 @@ public class ErrorWraper implements Serializable{
     }
     
 
-    public ErrorWraper(String error, String codigo, String nombreCodigo) {
-        this.error = error;
+    public ErrorWraper(String mensaje, String codigo, String nombreCodigo) {
+        this.mensaje = mensaje;
         this.codigo = codigo;
         this.nombreCodigo = nombreCodigo;
         this.Timestamp = Instant.now();
@@ -43,11 +43,11 @@ public class ErrorWraper implements Serializable{
    
     
     public String getError() {
-        return error;
+        return mensaje;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setError(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     public String getCodigo() {
