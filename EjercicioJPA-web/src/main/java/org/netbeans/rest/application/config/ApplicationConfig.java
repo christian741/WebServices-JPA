@@ -39,6 +39,8 @@ public class ApplicationConfig extends Application {
         resources.add(udec.edu.co.Excepcion.NotFoundExceptionFilter.class);
         resources.add(udec.edu.co.Excepcion.NulPointerExcepcionFilter.class);
         resources.add(udec.edu.co.Excepcion.ObjectNotFoundExcepcionFilter.class);
+        resources.add(udec.edu.co.Excepcion.ParamRequiredExceptionFilter.class);
+        resources.add(udec.edu.co.Excepcion.ParamUsedExceptionFilter.class);
     }
     
 }

@@ -6,6 +6,8 @@
 package udec.edu.co.Controller;
 
 //imports EJB
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.ObjectNotFoundException;
 import javax.ejb.Stateless;
@@ -48,7 +50,7 @@ public class ProfesorController {
     @POST
     @Produces(MediaType.APPLICATION_JSON) //Trae Respuesta
     @Consumes(MediaType.APPLICATION_JSON) //Consume algo
-    public Response insertar(@Valid Profesor profesor) {
+    public Response insertar(@Valid Profesor profesor) throws ParamRequiredException {
         Mensaje mensaje = service.insertar(profesor);
         return Response.status(Response.Status.CREATED).entity(mensaje).build();
     }
@@ -74,9 +76,9 @@ public class ProfesorController {
     @Path("/retornarPorCedulaN/{cedula}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response traerPorCedula(@PathParam("cedula") Integer cedula) {
-       Mensaje mensaje = service.traerPorCedula(cedula);
-        return null;
+    public Response traerPorCedula(@PathParam("cedula") String cedula) {
+       Profesor profesor = service.traerPorCedula(cedula);
+        return Response.status(Response.Status.OK).entity(profesor).build();
     }
 
     /**
@@ -94,12 +96,12 @@ public class ProfesorController {
     public Response retornarPorCedula(@PathParam("cedula")
             @Min(value = 9, message = "Minimo 9 Caracteres")
             @Max(value = 11, message = "Maximo 11 Caracteres")
-            @NotNull(message = "Cedula Requerida") Integer cedula) {
-        Mensaje mensaje = service.traerPorCedula(cedula);
-        return null;
+            @NotNull(message = "Cedula Requerida") String cedula) {
+        Profesor profesor = service.traerPorCedula(cedula);
+        return  Response.status(Response.Status.OK).entity(profesor).build();
     }
 
-    @Path("/retornarMateria/{materia}")
+    /*@Path("/retornarMateria/{materia}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response traerPorMateria(@PathParam("materia")
@@ -108,13 +110,21 @@ public class ProfesorController {
     ) {
         Mensaje mensaje;
         return null;
-    }
+    }*/
 
     @Path("/retornarTodos")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response traerTodos() {
-         Mensaje mensaje = service.traerTodos();
+    public Response traerTodos() throws ObjectNotFoundException {
+         List<Profesor> lista=  service.traerTodos();
+        return Response.status(Response.Status.OK).entity(lista).build();
+    }
+     @Path("eliminarId/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response eliminarId(@PathParam("id")
+           Integer id) throws ObjectNotFoundException {
+        Mensaje mensaje = service.eliminarPorId(id);
         return Response.status(Response.Status.OK).entity(mensaje).build();
     }
 
@@ -124,8 +134,8 @@ public class ProfesorController {
     public Response eliminar(@PathParam("cedula")
             @Min(value = 9, message = "Minimo 9 Caracteres")
             @Max(value = 11, message = "Maximo 11 Caracteres")
-            @NotNull(message = "Cedula Requerida") Integer cedula) throws ObjectNotFoundException {
+            @NotNull(message = "Cedula Requerida") String cedula) throws ObjectNotFoundException {
         Mensaje mensaje = service.eliminar(cedula);
-        return null;
+        return Response.status(Response.Status.OK).entity(mensaje).build();
     }
 }
