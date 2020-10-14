@@ -6,6 +6,7 @@
 package udec.edu.co.Entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -14,8 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 /**
  *
@@ -27,8 +32,11 @@ import javax.validation.constraints.Size;
     // Name por buena practica colocar la clase entity despues.
     // FROM escoger La entity Profesor no la de base de datos
     @NamedQuery(name = "Profesor.listarTodo", query = "SELECT p FROM Profesor p"),
-    @NamedQuery(name = "Profesor.validarCedula", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula AND p.id_profesor <> :id"),
-    @NamedQuery(name = "Profesor.validarCorreo", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo AND p.id_profesor <> :id")
+    @NamedQuery(name = "Profesor.validarCedula", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula AND p.id <> :id"),
+    @NamedQuery(name = "Profesor.validarCorreo", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo AND p.id <> :id"),
+    @NamedQuery(name = "Profesor.validarCorreoRegistro", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo"),
+    @NamedQuery(name = "Profesor.validarCedulaRegistro", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula"),
+    @NamedQuery(name = "Profesor.listarPorCedula", query = "SELECT p FROM Profesor p WHERE p.cedula= :cedula")
 })
 public class Profesor implements Serializable {
 
@@ -60,20 +68,35 @@ public class Profesor implements Serializable {
     @Column(name = "correo", length = 40, nullable = false)
     private String correo;
 
+    @NotNull(message = "Fecha requerida")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_nacimiento")
+    private Date fechaNacimiento;
+
     public Profesor() {
     }
 
-    public Profesor(Integer id, String nombre, String apellido, String cedula, short edad, String correo) {
+    public Profesor(Integer id, String nombre, String apellido, String cedula, short edad, String correo, Date fechaNacimiento) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
         this.edad = edad;
         this.correo = correo;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+   
+    
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
     
-    
 
+    
     public Integer getId() {
         return id;
     }
@@ -121,6 +144,5 @@ public class Profesor implements Serializable {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    
 
 }

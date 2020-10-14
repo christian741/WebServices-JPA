@@ -5,7 +5,11 @@
  */
 package udec.edu.co.ServiceImplementaciones;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
 import javax.ejb.EJB;
 import javax.ejb.ObjectNotFoundException;
 import javax.ejb.Stateless;
@@ -31,9 +35,15 @@ public class ProfesorServiceImplementaciones implements IProfesorService {
     private IProfesorRepo repo;
 
     @Override
-    public Mensaje insertar(Profesor profesor) {
+    public Mensaje insertar(Profesor profesor)throws ParamRequiredException{
+        if (repo.validarCedulaRegistro(profesor.getCedula())!=0) {
+            throw new ParamRequiredException("Cedula ya se encuentra Registrada");
+        }
+        if(repo.validarCorreoRegistro(profesor.getCorreo())!=0){
+            throw new ParamRequiredException("Correo ya se encuentra Registrado");
+        }
         this.repo.insertar(profesor);
-        return new Mensaje(new ErrorWraper("Se ha creado Correctamente", "200", "Created"), null);
+        return new Mensaje(new ErrorWraper("Insertado Correctamente", "204", "Created"),null);
     }
 
     @Override
@@ -41,65 +51,57 @@ public class ProfesorServiceImplementaciones implements IProfesorService {
         if(profesor.getId()== null){
             throw new ParamRequiredException("Id es requerido para edición");
         }else {
-            this.traerId(profesor.getId()); 
-            this.validarCamposEdicion(profesor);
+            Profesor profesor1 = this.traerId(profesor.getId()); 
+            this.validarCamposEdicion(profesor1);
             repo.editar(profesor);
         }    
-        return new Mensaje(new ErrorWraper("Se ha editado Correctamente", "202", "Modifed"), null);
+        return  new Mensaje(new ErrorWraper("Modificado Correctamente", "200", "Ok"),null);
     }
 
     @Override
-    public Mensaje eliminar(Integer cedula) throws ObjectNotFoundException{
-        Mensaje mensaje = this.traerId(cedula);
-        Profesor profesor = (Profesor) mensaje.getObjeto().get(0);
+    public Mensaje eliminar(String cedula) throws ObjectNotFoundException{
+        Profesor profesor = this.traerPorCedula(cedula);
         repo.eliminar(profesor);
-        return new Mensaje(new ErrorWraper("Se ha eliminado Correctamente", "202", "Modifed"), null);
+        return new Mensaje(new ErrorWraper("Eliminado Correctaente","204", "NoContent"),null);
+    }
+      @Override
+    public Mensaje eliminarPorId(Integer id) throws ObjectNotFoundException {
+        Profesor profesor = this.traerId(id);
+        repo.eliminar(profesor);
+        return new Mensaje(new ErrorWraper("Eliminado Correctaente","204", "NoContent"),null);
     }
 
     @Override
-    public Mensaje traerPorCedula(Integer cedula) {
-       return new Mensaje(new ErrorWraper("No ha cambiado esta", "202", "Modifed"), null);
+    public Profesor traerPorCedula(String cedula) {
+       return repo.listarPorCedula(cedula);
     }
 
     @Override
-    public Mensaje traerTodos() {
-        ArrayList<Profesor> listaProfesor = (ArrayList<Profesor>) repo.listarTodos();
-        Mensaje mensaje = new Mensaje(new ErrorWraper("Se ha creado Correctamente", "200", "Created"), castLista(listaProfesor));
-        return mensaje;
+    public List<Profesor> traerTodos() throws ObjectNotFoundException{
+        List<Profesor> listaProfesor =  repo.listarTodos();
+         
+        if(listaProfesor.isEmpty()){
+           throw new ObjectNotFoundException("No hay nada en la lista");
+        }else{
+           return listaProfesor;
+        }
+        
     }
 
     @Override
-    public Mensaje traerId(Integer id)  throws ObjectNotFoundException {
+    public Profesor traerId(Integer id)  throws ObjectNotFoundException {
         Profesor profesor = repo.listarPorId(id);
         if(profesor != null) 
-            return new Mensaje(new ErrorWraper("Busqueda correcta", "200", "Created"),castObjeto(profesor));
+            return profesor;
         else
-            throw new ObjectNotFoundException("Profesor no existe.");
+            throw new ObjectNotFoundException("No se encontro el id.");
 
     }
-    
-    /**
-     * Castear Lista a Objetos A Profesores
-     * @param listaVieja
-     * @return 
-     */
-    private ArrayList<Object> castLista(ArrayList<Profesor> listaVieja) {
-        
-        ArrayList<Object> nuevaListaCasteada = new ArrayList<>();
-        for (Profesor listObject : listaVieja) {
-            nuevaListaCasteada.add((Object) listObject);
-        }
-        return nuevaListaCasteada;
-    }
-
-    private ArrayList<Object> castObjeto(Profesor profesor){
-        ArrayList<Object> nuevaListaCasteada = new ArrayList<>();
-        nuevaListaCasteada.add(profesor);
-        return nuevaListaCasteada;
-    }
+   
     
     private void validarCamposEdicion(Profesor profesor) throws ParamUsedException{
             Integer validacion = repo.validarCedula(profesor.getCedula(), profesor.getId());
+            System.out.println(validacion);
             if(validacion != 0)
                 throw new ParamUsedException("Cédula ya se encuentra registrada");
     
@@ -107,4 +109,12 @@ public class ProfesorServiceImplementaciones implements IProfesorService {
             if(validacion != 0)
                 throw new ParamUsedException("Correo ya se encuentra registradao");            
     }  
+
+  
+    
+    
+
+  
+     
+ 
 }
