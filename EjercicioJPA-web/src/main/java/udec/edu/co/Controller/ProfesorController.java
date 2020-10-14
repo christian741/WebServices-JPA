@@ -76,7 +76,7 @@ public class ProfesorController {
     @Path("/retornarPorCedulaN/{cedula}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response traerPorCedula(@PathParam("cedula") String cedula) {
+    public Response traerPorCedula(@PathParam("cedula") String cedula) throws ObjectNotFoundException {
        Profesor profesor = service.traerPorCedula(cedula);
         return Response.status(Response.Status.OK).entity(profesor).build();
     }
@@ -94,9 +94,8 @@ public class ProfesorController {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Response retornarPorCedula(@PathParam("cedula")
-            @Min(value = 9, message = "Minimo 9 Caracteres")
-            @Max(value = 11, message = "Maximo 11 Caracteres")
-            @NotNull(message = "Cedula Requerida") String cedula) {
+            @Size(min = 9,max = 11 , message = "Maximo 11 caracteres y Minimo 9")
+            @NotNull(message = "Cedula Requerida") String cedula) throws ObjectNotFoundException {
         Profesor profesor = service.traerPorCedula(cedula);
         return  Response.status(Response.Status.OK).entity(profesor).build();
     }
