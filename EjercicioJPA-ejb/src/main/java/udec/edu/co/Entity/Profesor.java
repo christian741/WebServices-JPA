@@ -68,9 +68,9 @@ public class Profesor implements Serializable {
     @Column(name = "correo", length = 40, nullable = false)
     private String correo;
 
-    @NotNull(message = "Fecha requerida")
+    //@NotNull(message = "Fecha requerida")
     @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_nacimiento")
+    //@Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
 
     public Profesor() {

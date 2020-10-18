@@ -52,7 +52,7 @@ public class ProfesorServiceImplementaciones implements IProfesorService {
             throw new ParamRequiredException("Id es requerido para edición");
         }else {
             Profesor profesor1 = this.traerId(profesor.getId()); 
-            this.validarCamposEdicion(profesor1);
+            this.validarCamposEdicion(profesor);
             repo.editar(profesor);
         }    
         return  new Mensaje(new ErrorWraper("Modificado Correctamente", "200", "Ok"),null);
@@ -72,8 +72,14 @@ public class ProfesorServiceImplementaciones implements IProfesorService {
     }
 
     @Override
-    public Profesor traerPorCedula(String cedula) {
-       return repo.listarPorCedula(cedula);
+    public Profesor traerPorCedula(String cedula) throws ObjectNotFoundException {
+        Profesor profesor = repo.listarPorCedula(cedula);
+        if (profesor==null) {
+            throw new ObjectNotFoundException("No existe este Profesor");
+        }else{
+            return repo.listarPorCedula(cedula);
+        }
+       
     }
 
     @Override

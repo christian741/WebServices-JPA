@@ -24,7 +24,7 @@ public interface IProfesorService {
     public Mensaje editar(Profesor profesor)throws ParamRequiredException,ParamUsedException,ObjectNotFoundException;
     public Mensaje eliminar(String cedula)throws ObjectNotFoundException;
     public Mensaje eliminarPorId(Integer id)throws ObjectNotFoundException;
-    public Profesor traerPorCedula(String cedula);
+    public Profesor traerPorCedula(String cedula)throws ObjectNotFoundException;
     public List<Profesor> traerTodos() throws ObjectNotFoundException;
     public Profesor traerId(Integer id) throws ObjectNotFoundException;
 }
