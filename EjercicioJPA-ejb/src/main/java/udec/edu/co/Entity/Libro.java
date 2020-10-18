@@ -5,7 +5,7 @@
  */
 package udec.edu.co.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
 
 /**
  * @OneToOne – Default fetch type is EAGER
@@ -46,6 +47,7 @@ public class Libro implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_autor", nullable = false)
+    @XmlInverseReference(mappedBy="listaLibros")
     private Autor autor;
 
     public Libro() {
@@ -58,14 +60,9 @@ public class Libro implements Serializable {
         this.autor = autor;
     }
 
-    @JsonIgnore
-    public Autor getAutor() {
-        return autor;
-    }
+  
 
-    public String getEditorial() {
-        return editorial;
-    }
+   
 
     public Integer getId() {
         return id;
@@ -89,6 +86,13 @@ public class Libro implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    @JsonIgnore
+    public Autor getAutor() {
+        return autor;
+    }
+    public String getEditorial() {
+        return editorial;
     }
 
 }

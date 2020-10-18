@@ -6,6 +6,7 @@
 package udec.edu.co.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,6 +32,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "autor")
+@NamedQueries({
+    @NamedQuery(name = "Autor.listarTodo", query = "SELECT a FROM Autor a")
+})
 public class Autor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +56,7 @@ public class Autor implements Serializable {
     //Lazy se encarga de traer una
     //Eager se encarga de todo
     @OneToMany(mappedBy = "autor" ,cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Libro> listaLibros;
 
     public Autor(Integer id, String nombre, String apellido, Date fecha, List<Libro> listaLibros) {

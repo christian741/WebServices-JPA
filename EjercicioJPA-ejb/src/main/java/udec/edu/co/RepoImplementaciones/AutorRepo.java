@@ -21,12 +21,12 @@ import udec.edu.co.Repo.IAutorRepo;
 @Stateless
 public class AutorRepo implements IAutorRepo{
     
-    @PersistenceContext(unitName = "co.edu.unicundi_proyectoEAR-ejb_ejb_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "udec.edu.co_EjercicioJPA-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager entity;
 
     @Override
     public List<Autor> listar() {
-        TypedQuery<Autor> listaAutor = this.entity.createNamedQuery("Profesor.listarTodo", Autor.class);                
+        TypedQuery<Autor> listaAutor = this.entity.createNamedQuery("Autor.listarTodo", Autor.class);                
         return listaAutor.getResultList();        
     }
 
