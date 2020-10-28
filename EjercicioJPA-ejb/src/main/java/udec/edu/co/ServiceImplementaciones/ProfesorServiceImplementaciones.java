@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.ObjectNotFoundException;
 import javax.ejb.Stateless;
@@ -36,6 +38,10 @@ public class ProfesorServiceImplementaciones implements IProfesorService {
 
     @Override
     public Mensaje insertar(Profesor profesor)throws ParamRequiredException{
+        // compilamos el patron
+        Pattern patron = Pattern.compile("");
+        // creamos el Matcher a partir del patron, la cadena como parametro
+        Matcher encaja = patron.matcher(profesor.getCorreo());
         if (repo.validarCedulaRegistro(profesor.getCedula())!=0) {
             throw new ParamRequiredException("Cedula ya se encuentra Registrada");
         }

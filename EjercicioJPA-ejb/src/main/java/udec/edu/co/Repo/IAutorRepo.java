@@ -19,6 +19,12 @@ public interface IAutorRepo {
     
     public List<Autor> listar();
     
+    public List<Autor> listarOpcion2();
+
+    public List<Autor> listarOpcion3();
+    
+     public List<Autor> listarOpcion4();
+    
     public Autor listarPorId(Integer id);
     
     public void guardar(Autor autor);
@@ -26,6 +32,8 @@ public interface IAutorRepo {
     public void editar(Autor autor);
    
     public void eliminar(Autor autor);
+
+    
     
     
 }

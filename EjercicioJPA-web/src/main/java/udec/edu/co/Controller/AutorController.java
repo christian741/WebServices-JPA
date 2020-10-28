@@ -41,6 +41,30 @@ public class AutorController {
         return Response.status(Response.Status.OK).entity(listarAutor).build();       
     }        
     
+     @Path("/listarOpcion2")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarOpcion2()  {
+        List<Autor> listarAutor = service.listarOpcion2();
+        return Response.status(Response.Status.OK).entity(listarAutor).build();       
+    }        
+
+    @Path("/listarOpcion3")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarOpcion3()  {
+        List<Autor> listarAutor = service.listarOpcion3();
+        return Response.status(Response.Status.OK).entity(listarAutor).build();       
+    }        
+    
+    @Path("/listarOpcion4")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarOpcion4()  {
+        List<Autor> listarAutor = service.listarOpcion4();
+        return Response.status(Response.Status.OK).entity(listarAutor).build();       
+    }        
+    
     @Path("/retornarPorId/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

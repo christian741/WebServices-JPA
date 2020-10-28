@@ -8,8 +8,10 @@ package udec.edu.co.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,6 +39,10 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Autor.listarTodo", query = "SELECT a FROM Autor a")
 })
+
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Autor.listarTodoConsultaNativo", query = "select a.id, a.nombre, a.apellido, a.fecha from public.autor a", resultClass = Autor.class)
+})
 public class Autor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +59,8 @@ public class Autor implements Serializable {
     private String apellido;
     
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
+    @JsonbDateFormat(value = "dd-MM-YYYY",locale = "es")
+    private LocalDate fecha;
     
     //Lazy se encarga de traer una
     //Eager se encarga de todo
@@ -59,15 +68,15 @@ public class Autor implements Serializable {
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Libro> listaLibros;
 
-    public Autor(Integer id, String nombre, String apellido, Date fecha, List<Libro> listaLibros) {
+    public Autor() {
+    }
+
+    public Autor(Integer id, String nombre, String apellido, LocalDate fecha, List<Libro> listaLibros) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fecha = fecha;
         this.listaLibros = listaLibros;
-    }
-
-    public Autor() {
     }
 
     public Integer getId() {
@@ -94,11 +103,11 @@ public class Autor implements Serializable {
         this.apellido = apellido;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -109,8 +118,7 @@ public class Autor implements Serializable {
     public void setListaLibros(List<Libro> listaLibros) {
         this.listaLibros = listaLibros;
     }
-    
-    
-    
+
+  
     
 }

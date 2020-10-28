@@ -47,6 +47,7 @@ public class Libro implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_autor", nullable = false)
+    //Hace que no se llame inversamente otra clase
     @XmlInverseReference(mappedBy="listaLibros")
     private Autor autor;
 
