@@ -11,6 +11,7 @@ import javax.ejb.Local;
 import javax.ejb.ObjectNotFoundException;
 import udec.edu.co.Dto.LibroDto;
 import udec.edu.co.Entity.Libro;
+import udec.edu.co.Excepcion.ParamRequiredException;
 
 /**
  *
@@ -23,10 +24,10 @@ public interface ILibroService {
         
     public LibroDto listarPorId(Integer id) throws ObjectNotFoundException;
     
-    public void guardar(Libro libro);
+    public void guardar(Libro libro)throws ParamRequiredException;
     
-    public void editar(Libro libro);
+    public void editar(Libro libro)throws ParamRequiredException,ObjectNotFoundException;
    
-    public void eliminar(Libro libro);
+    public void eliminar(Integer id)throws ObjectNotFoundException;
     
 }
