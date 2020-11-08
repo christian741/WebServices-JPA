@@ -19,6 +19,7 @@ import javax.persistence.SynchronizationType;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transaction;
 import udec.edu.co.Entity.Autor;
+import udec.edu.co.Repo.AbstractFacade;
 import udec.edu.co.Repo.IAutorRepo;
 
 /**
@@ -26,24 +27,23 @@ import udec.edu.co.Repo.IAutorRepo;
  * @author ASUS-PC
  */
 @Stateless
-public class AutorRepo implements IAutorRepo {
+public class AutorRepo extends AbstractFacade<Autor, Integer>implements IAutorRepo {
 
-    //@PersistenceContext(unitName = "udec.edu.co_EjercicioJPA-ejb_ejb_1.0-SNAPSHOTPU",synchronization = SynchronizationType.UNSYNCHRONIZED)
+   
     @PersistenceContext(unitName = "udec.edu.co_EjercicioJPA-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager entity;
-    //private EntityTransaction tx;
-    //private EntityManagerFactory emf;
-    //private EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("udec.edu.co_EjercicioJPA-ejb_ejb_1.0-SNAPSHOTPU");
-    //private EntityManager entitymanager = emfactory.createEntityManager( );
-   
-     @Override
-    public List<Autor> listar() {
-        this.entity.getEntityManagerFactory().getCache().evictAll();
-        TypedQuery<Autor> listaAutor = this.entity.createNamedQuery("Autor.listarTodo", Autor.class);                
-        return listaAutor.getResultList();        
-    }
     
-     @Override
+    private String query;
+
+    
+
+    public AutorRepo() {
+        super(Autor.class);
+    }
+   
+    
+    
+    @Override
     public List<Autor> listarOpcion2() {
         this.entity.getEntityManagerFactory().getCache().evictAll();
         TypedQuery<Autor> listaAutor = this.entity.createNamedQuery("Autor.listarSoloAutor", Autor.class);                
@@ -57,12 +57,7 @@ public class AutorRepo implements IAutorRepo {
         return listaAutor.getResultList();                
     }
     
-    @Override
-    public List<Autor> listarOpcion4() {
-         Query q = this.entity.createNativeQuery("select id, nombre, apellido from public.autor", Autor.class);
-         return q.getResultList();
-    }    
-
+    
     @Override
     //@Transactional(Transactional.TxType.SUPPORTS)
     public Autor listarPorId(Integer id) {
@@ -84,6 +79,14 @@ public class AutorRepo implements IAutorRepo {
     }
 
     @Override
+    public List<Autor> listar() {
+        query = "Autor.listarTodo";
+        this.entity.getEntityManagerFactory().getCache().evictAll();
+        TypedQuery<Autor> listaAutor = this.entity.createNamedQuery(this.getQuery(), Autor.class);                
+        return listaAutor.getResultList();        
+    }
+    
+    @Override
     public void guardar(Autor autor) {
         this.entity.persist(autor);
     }
@@ -97,6 +100,18 @@ public class AutorRepo implements IAutorRepo {
     public void eliminar(Autor autor) {
         this.entity.remove(autor);
     }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return entity;
+    }
+
+    @Override
+    protected String getQuery() {
+        return query;
+    }
+
+   
 
   
 }

@@ -22,8 +22,7 @@ public interface IAutorRepo {
     public List<Autor> listarOpcion2();
 
     public List<Autor> listarOpcion3();
-    
-     public List<Autor> listarOpcion4();
+
     
     public Autor listarPorId(Integer id);
     

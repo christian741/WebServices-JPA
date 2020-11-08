@@ -37,12 +37,13 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "autor")
 @NamedQueries({
-    @NamedQuery(name = "Autor.listarTodo", query = "SELECT a FROM Autor a")
+    @NamedQuery(name = "Autor.listarTodo", query = "SELECT a FROM Autor a"),
+    @NamedQuery(name = "Autor.listarSoloAutor", query = "SELECT a.id, a.nombre, a.apellido, a.fecha FROM Autor a")
 })
 
-@NamedNativeQueries({
+/*@NamedNativeQueries({
     @NamedNativeQuery(name = "Autor.listarTodoConsultaNativo", query = "select a.id, a.nombre, a.apellido, a.fecha from public.autor a", resultClass = Autor.class)
-})
+})*/
 public class Autor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +60,7 @@ public class Autor implements Serializable {
     private String apellido;
     
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonbDateFormat(value = "dd-MM-YYYY",locale = "es")
+    @JsonbDateFormat(value = "dd-mm-yyyy",locale = "es")
     private LocalDate fecha;
     
     //Lazy se encarga de traer una
