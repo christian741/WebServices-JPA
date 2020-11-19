@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import udec.edu.co.Entity.Libro;
+import udec.edu.co.Repo.AbstractFacade;
 import udec.edu.co.Repo.ILibroRepo;
 
 /**
@@ -19,10 +20,14 @@ import udec.edu.co.Repo.ILibroRepo;
  * @author ASUS-PC
  */
 @Stateless
-public class LibroRepoImpl implements ILibroRepo{
+public class LibroRepoImpl extends AbstractFacade<Libro, Integer> implements ILibroRepo{
     
     @PersistenceContext(unitName = "udec.edu.co_EjercicioJPA-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager entity;
+
+    public LibroRepoImpl() {
+        super(Libro.class);
+    }
     
 
     @Override
@@ -50,6 +55,16 @@ public class LibroRepoImpl implements ILibroRepo{
     @Override
     public void eliminar(Libro libro) {
         this.entity.remove(libro);
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String getQuery() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    

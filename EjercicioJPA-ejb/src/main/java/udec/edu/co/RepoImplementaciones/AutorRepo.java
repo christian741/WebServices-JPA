@@ -77,6 +77,24 @@ public class AutorRepo extends AbstractFacade<Autor, Integer>implements IAutorRe
             //entity.getTransaction().rollback();
         //}
     }
+    
+    @Override
+    public List<Autor> listarPaginado(Integer limite,Integer paginas) {
+        query = "Autor.listarTodo";
+        this.entity.getEntityManagerFactory().getCache().evictAll();
+        TypedQuery<Autor> listaAutor = this.entity.createNamedQuery(this.getQuery(), Autor.class); 
+        listaAutor.setMaxResults(limite);
+        listaAutor.setFirstResult(limite *(paginas - 1));
+        return listaAutor.getResultList();        
+    }
+    
+    
+    @Override
+    public Integer contarAutor() {
+        Query query = this.entity.createNamedQuery("Autor.contarCantidad");
+        Integer respuesta = Integer.parseInt(query.getSingleResult().toString());
+        return respuesta;
+    }
 
     @Override
     public List<Autor> listar() {

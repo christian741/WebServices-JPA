@@ -24,6 +24,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,14 +37,22 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "autor")
+/**
+ * En la entitys
+ */
 @NamedQueries({
     @NamedQuery(name = "Autor.listarTodo", query = "SELECT a FROM Autor a"),
-    @NamedQuery(name = "Autor.listarSoloAutor", query = "SELECT a.id, a.nombre, a.apellido, a.fecha FROM Autor a")
+    @NamedQuery(name = "Autor.listarSoloAutor", query = "SELECT a.id, a.nombre, a.apellido, a.fecha FROM Autor a"),
+    @NamedQuery(name = "Autor.contarCantidad", query = "SELECT COUNT(a) FROM Autor a")
 })
+/**
+ * Sql filtro
+*/
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Autor.listarTodoConsultaNativo", query = "select a.id, a.nombre, a.apellido, a.fecha from public.autor a", resultClass = Autor.class),
+    @NamedNativeQuery(name = "Autor.listarPaginado", query = "select * from paginacion()", resultClass = Autor.class)
 
-/*@NamedNativeQueries({
-    @NamedNativeQuery(name = "Autor.listarTodoConsultaNativo", query = "select a.id, a.nombre, a.apellido, a.fecha from public.autor a", resultClass = Autor.class)
-})*/
+})
 public class Autor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,17 +77,32 @@ public class Autor implements Serializable {
     @OneToMany(mappedBy = "autor" ,cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Libro> listaLibros;
+    
+    @OneToOne(mappedBy = "autor" ,cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    private Direccion direccion;
 
     public Autor() {
     }
 
-    public Autor(Integer id, String nombre, String apellido, LocalDate fecha, List<Libro> listaLibros) {
+    public Autor(Integer id, String nombre, String apellido, LocalDate fecha, List<Libro> listaLibros, Direccion direccion) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fecha = fecha;
         this.listaLibros = listaLibros;
+        this.direccion = direccion;
     }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+    
+    
+
 
     public Integer getId() {
         return id;

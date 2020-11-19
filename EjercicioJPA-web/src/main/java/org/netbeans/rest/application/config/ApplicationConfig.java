@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(udec.edu.co.Controller.AutorController.class);
         resources.add(udec.edu.co.Controller.LibroController.class);
         resources.add(udec.edu.co.Controller.ProfesorController.class);
+        resources.add(udec.edu.co.Controller.vistaController.class);
         resources.add(udec.edu.co.Excepcion.ClassNotFoundExceptionFilter.class);
         resources.add(udec.edu.co.Excepcion.ConstrainsVioletionfilter.class);
         resources.add(udec.edu.co.Excepcion.EJBExceptionFilter.class);

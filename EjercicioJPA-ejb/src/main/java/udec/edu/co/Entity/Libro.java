@@ -61,9 +61,6 @@ public class Libro implements Serializable {
         this.autor = autor;
     }
 
-  
-
-   
 
     public Integer getId() {
         return id;

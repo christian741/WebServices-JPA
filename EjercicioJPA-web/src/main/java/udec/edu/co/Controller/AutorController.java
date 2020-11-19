@@ -59,7 +59,15 @@ public class AutorController {
     public Response listarOpcion3(@PathParam("listar") Integer listar) throws ParamRequiredException  {
         List<Autor> listarAutor = service.listarOpcion3(listar);
         return Response.status(Response.Status.OK).entity(listarAutor).build();       
-    }        
+    }       
+    
+     @Path("/listarPaginado/{limite}/{paginas}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarPaginado(@PathParam("limite") Integer limite,@PathParam("paginas") Integer paginas) throws ParamRequiredException  {
+        List<Autor> listarAutor = service.listarPaginado(limite, paginas);
+        return Response.status(Response.Status.OK).entity(listarAutor).build();       
+    }       
     
    
     

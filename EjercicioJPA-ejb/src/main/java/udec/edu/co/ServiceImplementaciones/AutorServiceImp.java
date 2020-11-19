@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 
 import udec.edu.co.Dto.AutorDto;
 import udec.edu.co.Dto.LibroDto;
+import udec.edu.co.Dto.Paginacion;
 import udec.edu.co.Entity.Autor;
 import udec.edu.co.Entity.Libro;
 import udec.edu.co.Excepcion.ParamRequiredException;
@@ -88,6 +89,22 @@ public class AutorServiceImp implements IAutorService {
         //}
         return repo.listarOpcion2();
     }
+    
+    @Override
+    public List<Autor> listarPaginado(Integer limite,Integer paginas)throws ParamRequiredException  {
+        Integer cantidad = repo. contarAutor();
+       
+        //List<Autor> listaAutor = repo.listar();
+        Paginacion<Autor> paginador = new Paginacion<>();
+        paginador.contenido = repo.listar();
+        paginador.totalResultados = cantidad;
+        paginador.totalPaginas  = paginas;
+       // paginas = cantidad/paginas;
+        paginador.contenido=repo.listarPaginado(limite, paginas);
+           
+        return paginador.contenido;
+    }
+
 
     @Override
     public List<Autor> listarOpcion3(Integer listar) throws ParamRequiredException {
@@ -129,6 +146,7 @@ public class AutorServiceImp implements IAutorService {
                 libro.setAutor(autor);
             }
         }
+        autor.getDireccion().setAutor(autor);
         repo.guardar(autor);
     }
 

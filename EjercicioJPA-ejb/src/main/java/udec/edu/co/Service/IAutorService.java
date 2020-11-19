@@ -27,6 +27,7 @@ public interface IAutorService {
     
     public List<Autor> listarOpcion3(Integer listar)throws ParamRequiredException ;
     
+    public List<Autor> listarPaginado(Integer limite,Integer lugar) throws ParamRequiredException ;
     
     public Autor listarPorId(Integer id) throws ObjectNotFoundException;
     

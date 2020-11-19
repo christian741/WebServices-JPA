@@ -22,7 +22,10 @@ public interface IAutorRepo {
     public List<Autor> listarOpcion2();
 
     public List<Autor> listarOpcion3();
-
+    
+    public Integer contarAutor();
+    
+    public List<Autor> listarPaginado(Integer limite,Integer lugar);
     
     public Autor listarPorId(Integer id);
     

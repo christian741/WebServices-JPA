@@ -24,19 +24,37 @@ public class AutorDto implements Serializable{
     private Date fecha;
     
     private List<LibroDto> libro;
+    
+    private DireccionDto direccion;
+    
+    
 
     public AutorDto() {
     
     }
-    
-    public AutorDto(Integer id, String nombre, String apellido, Date fecha, List<LibroDto> libro) {
+
+    public AutorDto(Integer id, String nombre, String apellido, Date fecha, List<LibroDto> libro, DireccionDto direccion) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fecha = fecha;
         this.libro = libro;
+        this.direccion = direccion;
+    }
+    
+    
+
+    public DireccionDto getDireccion() {
+        return direccion;
     }
 
+    public void setDireccion(DireccionDto direccion) {
+        this.direccion = direccion;
+    }
+    
+    
+
+    
     public Integer getId() {
         return id;
     }
